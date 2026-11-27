@@ -239,7 +239,23 @@ footer.ver{color:var(--mut);font-size:12px;text-align:center;margin-top:24px}
 <body>
 <header class="top">
  <div class="brand">
-  <!--LOGO_MARK--><span class="mark" aria-hidden="true"><svg viewBox="0 0 100 100"><g fill="none" stroke="#fff" stroke-width="5.5"><circle cx="50" cy="29" r="15"/><circle cx="70" cy="43.5" r="15"/><circle cx="62.3" cy="67" r="15"/><circle cx="37.7" cy="67" r="15"/><circle cx="30" cy="43.5" r="15"/></g><circle cx="50" cy="50" r="7.5" fill="#FF6B4A"/></svg></span><!--/LOGO_MARK-->
+  <span class="mark logo" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
+<defs>
+ <linearGradient id="zlambg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1A2029"/><stop offset="1" stop-color="#0A0D12"/></linearGradient>
+ <radialGradient id="zlamglowbg" cx=".5" cy=".18" r=".75"><stop offset="0" stop-color="#2DE2E6" stop-opacity=".16"/><stop offset="1" stop-color="#2DE2E6" stop-opacity="0"/></radialGradient>
+ <filter id="zlamglow" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="18"/></filter>
+ <pattern id="zlamgrid" width="64" height="64" patternUnits="userSpaceOnUse"><circle cx="32" cy="32" r="3" fill="#FFFFFF" fill-opacity=".06"/></pattern>
+<linearGradient id="zlamg" x1="250" y1="300" x2="790" y2="720" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#2DE2E6"/><stop offset=".55" stop-color="#4F8CFF"/><stop offset="1" stop-color="#9B6BFF"/></linearGradient>
+ <clipPath id="zlamclip"><rect width="1024" height="1024" rx="228"/></clipPath>
+</defs>
+<g clip-path="url(#zlamclip)">
+ <rect width="1024" height="1024" fill="url(#zlambg)"/><rect width="1024" height="1024" fill="url(#zlamgrid)"/><rect width="1024" height="1024" fill="url(#zlamglowbg)"/>
+<g fill="none" stroke="url(#zlamg)" stroke-width="64" stroke-linejoin="round" stroke-linecap="round" filter="url(#zlamglow)" opacity=".75"><path d="M236 330 H548 L248 690 H548"/><path d="M650 330 V690 H800"/></g>
+ <g fill="none" stroke="url(#zlamg)" stroke-width="64" stroke-linejoin="round" stroke-linecap="round"><path d="M236 330 H548 L248 690 H548"/><path d="M650 330 V690 H800"/></g>
+ <path d="M650 330 V300 L700 250 H800" fill="none" stroke="url(#zlamg)" stroke-width="22" stroke-linecap="round" stroke-linejoin="round"/>
+ <circle cx="236" cy="330" r="40" fill="#0E1218" stroke="#2DE2E6" stroke-width="22"/><circle cx="800" cy="690" r="40" fill="#0E1218" stroke="#9B6BFF" stroke-width="22"/><circle cx="800" cy="250" r="40" fill="#0E1218" stroke="#4F8CFF" stroke-width="22"/><circle cx="398" cy="510" r="34" fill="#FF6B4A"/><circle cx="398" cy="510" r="34" fill="#FF6B4A" filter="url(#zlamglow)"/>
+</g>
+</svg></span>
   <div><h1>經管團隊</h1><small id="unitLabel">中壢業務中心</small></div>
   <div class="sp"></div>
   <button id="installBtn" class="sm" hidden>安裝 App</button>
@@ -1531,27 +1547,27 @@ ACT.minPrint = () => {
 };
 
 /* ---- 月課表 → 課表圖檔（中壢專屬「桐花・老街溪」版型，canvas 自繪，完全離線） ---- */
-/* 配色：預設「溪光」（墨青＋溪藍＋珊瑚）；另有兩個備選，可在產生圖檔時切換 */
+/* 配色：課表圖預設「電光藍」；另可選「溪光」（App 同色系）與「桐花紫」，在產生圖檔時切換並記住 */
 const SI_THEMES = {
-  modern: { label: '溪光（墨青＋珊瑚）', ink: '#13262F', mut: '#5B6B72', paper: '#F7F7F4', card: '#FFFFFF', line: '#E5E8E8', pri: '#0E7490', priSoft: '#E3F1F5', priSofter: '#F2F8FA', acc: '#FF6B4A', accText: '#C2391A', accSoft: '#FFECE6', amber: '#E8A317', amberText: '#8A5A00', violet: '#6D5AE6', gray: '#9AA6AB', foot: '#13262F', footMut: '#A9BCC4', stream2: '#5CC6DD' },
-  electric: { label: '電光藍（石墨＋電光藍）', ink: '#15171C', mut: '#5C6370', paper: '#F5F6FA', card: '#FFFFFF', line: '#E3E6EE', pri: '#2F5BEA', priSoft: '#E6ECFE', priSofter: '#F3F6FF', acc: '#14B8A6', accText: '#0F766E', accSoft: '#DDF6F2', amber: '#F59E0B', amberText: '#8A5300', violet: '#C026D3', gray: '#9AA1AE', foot: '#15171C', footMut: '#A4ABBA', stream2: '#7C9BFF' },
+  electric: { label: '電光藍（預設：石墨＋電光藍）', ink: '#15171C', mut: '#5C6370', paper: '#F5F6FA', card: '#FFFFFF', line: '#E3E6EE', pri: '#2F5BEA', priSoft: '#E6ECFE', priSofter: '#F3F6FF', acc: '#14B8A6', accText: '#0F766E', accSoft: '#DDF6F2', amber: '#F59E0B', amberText: '#8A5300', violet: '#C026D3', gray: '#9AA1AE', foot: '#15171C', footMut: '#A4ABBA', stream2: '#7C9BFF' },
+  modern: { label: '溪光（與 App 同色：墨青＋珊瑚）', ink: '#13262F', mut: '#5B6B72', paper: '#F7F7F4', card: '#FFFFFF', line: '#E5E8E8', pri: '#0E7490', priSoft: '#E3F1F5', priSofter: '#F2F8FA', acc: '#FF6B4A', accText: '#C2391A', accSoft: '#FFECE6', amber: '#E8A317', amberText: '#8A5A00', violet: '#6D5AE6', gray: '#9AA6AB', foot: '#13262F', footMut: '#A9BCC4', stream2: '#5CC6DD' },
   iris: { label: '桐花紫（墨紫＋橘）', ink: '#221F2E', mut: '#615C70', paper: '#F8F7FB', card: '#FFFFFF', line: '#E7E4EF', pri: '#5B4BDB', priSoft: '#ECE9FC', priSofter: '#F6F4FE', acc: '#FF8A3D', accText: '#B4530F', accSoft: '#FFEEDF', amber: '#E0A100', amberText: '#7A5800', violet: '#0E9F8E', gray: '#A19CAE', foot: '#221F2E', footMut: '#B6B0C6', stream2: '#9C8FF0' }
 };
 let ZL = SI_THEMES.modern;
 // 品牌標誌（建置時可換成 logo 概念 A／B／C；空字串＝預設幾何桐花）
-const ZL_LOGO_URI = '__ZL_LOGO_URI__'.startsWith('data:') ? '__ZL_LOGO_URI__' : '';
+const ZL_LOGO_URI = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDI0IDEwMjQiPgo8ZGVmcz4KIDxsaW5lYXJHcmFkaWVudCBpZD0iemxhbWJnIiB4MT0iMCIgeTE9IjAiIHgyPSIxIiB5Mj0iMSI+PHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjMUEyMDI5Ii8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjMEEwRDEyIi8+PC9saW5lYXJHcmFkaWVudD4KIDxyYWRpYWxHcmFkaWVudCBpZD0iemxhbWdsb3diZyIgY3g9Ii41IiBjeT0iLjE4IiByPSIuNzUiPjxzdG9wIG9mZnNldD0iMCIgc3RvcC1jb2xvcj0iIzJERTJFNiIgc3RvcC1vcGFjaXR5PSIuMTYiLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiMyREUyRTYiIHN0b3Atb3BhY2l0eT0iMCIvPjwvcmFkaWFsR3JhZGllbnQ+CiA8ZmlsdGVyIGlkPSJ6bGFtZ2xvdyIgeD0iLTMwJSIgeT0iLTMwJSIgd2lkdGg9IjE2MCUiIGhlaWdodD0iMTYwJSI+PGZlR2F1c3NpYW5CbHVyIHN0ZERldmlhdGlvbj0iMTgiLz48L2ZpbHRlcj4KIDxwYXR0ZXJuIGlkPSJ6bGFtZ3JpZCIgd2lkdGg9IjY0IiBoZWlnaHQ9IjY0IiBwYXR0ZXJuVW5pdHM9InVzZXJTcGFjZU9uVXNlIj48Y2lyY2xlIGN4PSIzMiIgY3k9IjMyIiByPSIzIiBmaWxsPSIjRkZGRkZGIiBmaWxsLW9wYWNpdHk9Ii4wNiIvPjwvcGF0dGVybj4KPGxpbmVhckdyYWRpZW50IGlkPSJ6bGFtZyIgeDE9IjI1MCIgeTE9IjMwMCIgeDI9Ijc5MCIgeTI9IjcyMCIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiPjxzdG9wIG9mZnNldD0iMCIgc3RvcC1jb2xvcj0iIzJERTJFNiIvPjxzdG9wIG9mZnNldD0iLjU1IiBzdG9wLWNvbG9yPSIjNEY4Q0ZGIi8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjOUI2QkZGIi8+PC9saW5lYXJHcmFkaWVudD4KIDxjbGlwUGF0aCBpZD0iemxhbWNsaXAiPjxyZWN0IHdpZHRoPSIxMDI0IiBoZWlnaHQ9IjEwMjQiIHJ4PSIyMjgiLz48L2NsaXBQYXRoPgo8L2RlZnM+CjxnIGNsaXAtcGF0aD0idXJsKCN6bGFtY2xpcCkiPgogPHJlY3Qgd2lkdGg9IjEwMjQiIGhlaWdodD0iMTAyNCIgZmlsbD0idXJsKCN6bGFtYmcpIi8+PHJlY3Qgd2lkdGg9IjEwMjQiIGhlaWdodD0iMTAyNCIgZmlsbD0idXJsKCN6bGFtZ3JpZCkiLz48cmVjdCB3aWR0aD0iMTAyNCIgaGVpZ2h0PSIxMDI0IiBmaWxsPSJ1cmwoI3psYW1nbG93YmcpIi8+CjxnIGZpbGw9Im5vbmUiIHN0cm9rZT0idXJsKCN6bGFtZykiIHN0cm9rZS13aWR0aD0iNjQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgZmlsdGVyPSJ1cmwoI3psYW1nbG93KSIgb3BhY2l0eT0iLjc1Ij48cGF0aCBkPSJNMjM2IDMzMCBINTQ4IEwyNDggNjkwIEg1NDgiLz48cGF0aCBkPSJNNjUwIDMzMCBWNjkwIEg4MDAiLz48L2c+CiA8ZyBmaWxsPSJub25lIiBzdHJva2U9InVybCgjemxhbWcpIiBzdHJva2Utd2lkdGg9IjY0IiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBzdHJva2UtbGluZWNhcD0icm91bmQiPjxwYXRoIGQ9Ik0yMzYgMzMwIEg1NDggTDI0OCA2OTAgSDU0OCIvPjxwYXRoIGQ9Ik02NTAgMzMwIFY2OTAgSDgwMCIvPjwvZz4KIDxwYXRoIGQ9Ik02NTAgMzMwIFYzMDAgTDcwMCAyNTAgSDgwMCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSJ1cmwoI3psYW1nKSIgc3Ryb2tlLXdpZHRoPSIyMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+CiA8Y2lyY2xlIGN4PSIyMzYiIGN5PSIzMzAiIHI9IjQwIiBmaWxsPSIjMEUxMjE4IiBzdHJva2U9IiMyREUyRTYiIHN0cm9rZS13aWR0aD0iMjIiLz48Y2lyY2xlIGN4PSI4MDAiIGN5PSI2OTAiIHI9IjQwIiBmaWxsPSIjMEUxMjE4IiBzdHJva2U9IiM5QjZCRkYiIHN0cm9rZS13aWR0aD0iMjIiLz48Y2lyY2xlIGN4PSI4MDAiIGN5PSIyNTAiIHI9IjQwIiBmaWxsPSIjMEUxMjE4IiBzdHJva2U9IiM0RjhDRkYiIHN0cm9rZS13aWR0aD0iMjIiLz48Y2lyY2xlIGN4PSIzOTgiIGN5PSI1MTAiIHI9IjM0IiBmaWxsPSIjRkY2QjRBIi8+PGNpcmNsZSBjeD0iMzk4IiBjeT0iNTEwIiByPSIzNCIgZmlsbD0iI0ZGNkI0QSIgZmlsdGVyPSJ1cmwoI3psYW1nbG93KSIvPgo8L2c+Cjwvc3ZnPgo='.startsWith('data:') ? 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDI0IDEwMjQiPgo8ZGVmcz4KIDxsaW5lYXJHcmFkaWVudCBpZD0iemxhbWJnIiB4MT0iMCIgeTE9IjAiIHgyPSIxIiB5Mj0iMSI+PHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjMUEyMDI5Ii8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjMEEwRDEyIi8+PC9saW5lYXJHcmFkaWVudD4KIDxyYWRpYWxHcmFkaWVudCBpZD0iemxhbWdsb3diZyIgY3g9Ii41IiBjeT0iLjE4IiByPSIuNzUiPjxzdG9wIG9mZnNldD0iMCIgc3RvcC1jb2xvcj0iIzJERTJFNiIgc3RvcC1vcGFjaXR5PSIuMTYiLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiMyREUyRTYiIHN0b3Atb3BhY2l0eT0iMCIvPjwvcmFkaWFsR3JhZGllbnQ+CiA8ZmlsdGVyIGlkPSJ6bGFtZ2xvdyIgeD0iLTMwJSIgeT0iLTMwJSIgd2lkdGg9IjE2MCUiIGhlaWdodD0iMTYwJSI+PGZlR2F1c3NpYW5CbHVyIHN0ZERldmlhdGlvbj0iMTgiLz48L2ZpbHRlcj4KIDxwYXR0ZXJuIGlkPSJ6bGFtZ3JpZCIgd2lkdGg9IjY0IiBoZWlnaHQ9IjY0IiBwYXR0ZXJuVW5pdHM9InVzZXJTcGFjZU9uVXNlIj48Y2lyY2xlIGN4PSIzMiIgY3k9IjMyIiByPSIzIiBmaWxsPSIjRkZGRkZGIiBmaWxsLW9wYWNpdHk9Ii4wNiIvPjwvcGF0dGVybj4KPGxpbmVhckdyYWRpZW50IGlkPSJ6bGFtZyIgeDE9IjI1MCIgeTE9IjMwMCIgeDI9Ijc5MCIgeTI9IjcyMCIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiPjxzdG9wIG9mZnNldD0iMCIgc3RvcC1jb2xvcj0iIzJERTJFNiIvPjxzdG9wIG9mZnNldD0iLjU1IiBzdG9wLWNvbG9yPSIjNEY4Q0ZGIi8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjOUI2QkZGIi8+PC9saW5lYXJHcmFkaWVudD4KIDxjbGlwUGF0aCBpZD0iemxhbWNsaXAiPjxyZWN0IHdpZHRoPSIxMDI0IiBoZWlnaHQ9IjEwMjQiIHJ4PSIyMjgiLz48L2NsaXBQYXRoPgo8L2RlZnM+CjxnIGNsaXAtcGF0aD0idXJsKCN6bGFtY2xpcCkiPgogPHJlY3Qgd2lkdGg9IjEwMjQiIGhlaWdodD0iMTAyNCIgZmlsbD0idXJsKCN6bGFtYmcpIi8+PHJlY3Qgd2lkdGg9IjEwMjQiIGhlaWdodD0iMTAyNCIgZmlsbD0idXJsKCN6bGFtZ3JpZCkiLz48cmVjdCB3aWR0aD0iMTAyNCIgaGVpZ2h0PSIxMDI0IiBmaWxsPSJ1cmwoI3psYW1nbG93YmcpIi8+CjxnIGZpbGw9Im5vbmUiIHN0cm9rZT0idXJsKCN6bGFtZykiIHN0cm9rZS13aWR0aD0iNjQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgZmlsdGVyPSJ1cmwoI3psYW1nbG93KSIgb3BhY2l0eT0iLjc1Ij48cGF0aCBkPSJNMjM2IDMzMCBINTQ4IEwyNDggNjkwIEg1NDgiLz48cGF0aCBkPSJNNjUwIDMzMCBWNjkwIEg4MDAiLz48L2c+CiA8ZyBmaWxsPSJub25lIiBzdHJva2U9InVybCgjemxhbWcpIiBzdHJva2Utd2lkdGg9IjY0IiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBzdHJva2UtbGluZWNhcD0icm91bmQiPjxwYXRoIGQ9Ik0yMzYgMzMwIEg1NDggTDI0OCA2OTAgSDU0OCIvPjxwYXRoIGQ9Ik02NTAgMzMwIFY2OTAgSDgwMCIvPjwvZz4KIDxwYXRoIGQ9Ik02NTAgMzMwIFYzMDAgTDcwMCAyNTAgSDgwMCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSJ1cmwoI3psYW1nKSIgc3Ryb2tlLXdpZHRoPSIyMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+CiA8Y2lyY2xlIGN4PSIyMzYiIGN5PSIzMzAiIHI9IjQwIiBmaWxsPSIjMEUxMjE4IiBzdHJva2U9IiMyREUyRTYiIHN0cm9rZS13aWR0aD0iMjIiLz48Y2lyY2xlIGN4PSI4MDAiIGN5PSI2OTAiIHI9IjQwIiBmaWxsPSIjMEUxMjE4IiBzdHJva2U9IiM5QjZCRkYiIHN0cm9rZS13aWR0aD0iMjIiLz48Y2lyY2xlIGN4PSI4MDAiIGN5PSIyNTAiIHI9IjQwIiBmaWxsPSIjMEUxMjE4IiBzdHJva2U9IiM0RjhDRkYiIHN0cm9rZS13aWR0aD0iMjIiLz48Y2lyY2xlIGN4PSIzOTgiIGN5PSI1MTAiIHI9IjM0IiBmaWxsPSIjRkY2QjRBIi8+PGNpcmNsZSBjeD0iMzk4IiBjeT0iNTEwIiByPSIzNCIgZmlsbD0iI0ZGNkI0QSIgZmlsdGVyPSJ1cmwoI3psYW1nbG93KSIvPgo8L2c+Cjwvc3ZnPgo=' : '';
 let siLogoImg = null;
 const siLoadLogo = () => !ZL_LOGO_URI ? Promise.resolve(null) : siLogoImg ? Promise.resolve(siLogoImg) : new Promise(res => { const im = new Image(); im.onload = () => res(siLogoImg = im); im.onerror = () => res(null); im.src = ZL_LOGO_URI; });
 const ZL_SANS = '"Noto Sans TC","PingFang TC","Microsoft JhengHei","微軟正黑體","Noto Sans CJK TC","Noto Sans TC","Heiti TC","Source Han Sans TC",sans-serif';
 const ZL_SERIF = 'ZLSans,"PingFang TC","Noto Sans CJK TC","Noto Sans TC","Microsoft JhengHei",sans-serif'; // 標題用內嵌 Noto Sans TC Bold 子集
 const SI_KIND_L = { insurer: ['pri', '商品課程'], fixed: ['amber', '固定會議'], custom: ['violet', '專題／活動'], open: ['gray', '待安排'] };
 const SI_KIND = new Proxy({}, { get: (_, k) => SI_KIND_L[k] ? [ZL[SI_KIND_L[k][0]], SI_KIND_L[k][1]] : undefined });
-const SI_DEF = { slogan: '同心共學　穩健成長', place: '', notes: '1. 課程如有異動，以教育訓練組公告為準。\n2. 請準時出席，上課前 10 分鐘完成簽到。\n3. 國定假日停課不補課。', showOpen: false };
+const SI_DEF = { theme: 'electric', slogan: '同心共學　穩健成長', place: '', notes: '1. 課程如有異動，以教育訓練組公告為準。\n2. 請準時出席，上課前 10 分鐘完成簽到。\n3. 國定假日停課不補課。', showOpen: false };
 function siCfg(ym) {
   const d = S.schedImg = S.schedImg || {}; d.months = d.months || {};
   const m = d.months[ym] || {};
   const pick = k => m[k] != null ? m[k] : d[k] != null ? d[k] : SI_DEF[k];
-  return { slogan: pick('slogan'), place: pick('place'), notes: pick('notes'), showOpen: !!pick('showOpen'), theme: SI_THEMES[pick('theme')] ? pick('theme') : 'modern' };
+  return { slogan: pick('slogan'), place: pick('place'), notes: pick('notes'), showOpen: !!pick('showOpen'), theme: SI_THEMES[pick('theme')] ? pick('theme') : 'electric' };
 }
 function siData(ym, cfg) {
   const y = +ym.slice(0, 4), m = +ym.slice(5, 7); const hol = S.holidays[y] || {};
@@ -1666,7 +1682,7 @@ async function renderScheduleImage(ym, cfg, opt = {}) {
   const cv = document.createElement('canvas'); cv.width = Math.round(SI_W * scale); cv.height = Math.round(H * scale);
   const ctx = cv.getContext('2d'); ctx.scale(scale, scale); ctx.textBaseline = 'alphabetic';
   const { X0, X1 } = L; const W = SI_W;
-  ZL = SI_THEMES[cfg.theme] || SI_THEMES.modern;
+  ZL = SI_THEMES[cfg.theme] || SI_THEMES.electric;
   // 底色
   ctx.fillStyle = ZL.paper; ctx.fillRect(0, 0, W, H);
   /* ---------- 頁首：留白＋大月份＋老街溪細流＋幾何桐花 ---------- */

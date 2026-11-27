@@ -9,8 +9,8 @@
   "dir": "ltr",
   "display": "standalone",
   "orientation": "any",
-  "background_color": "#f4f6f2",
-  "theme_color": "#0b4f4a",
+  "background_color": "#F7F7F4",
+  "theme_color": "#F7F7F4",
   "categories": [
     "business",
     "productivity"

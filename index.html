@@ -35,6 +35,8 @@ header.top::before{content:"";position:absolute;inset:0;pointer-events:none;back
 .brand{position:relative;display:flex;align-items:center;gap:11px}
 .brand .mark{width:40px;height:40px;flex:0 0 40px;border-radius:12px;background:var(--ink);display:grid;place-items:center;box-shadow:0 4px 12px rgba(19,38,47,.18)}
 .brand .mark svg{width:32px;height:32px}
+.brand .mark.logo{background:none;overflow:hidden;box-shadow:0 4px 14px rgba(10,13,18,.25)}
+.brand .mark.logo svg{width:100%;height:100%;display:block}
 .brand h1{font-family:var(--display);font-size:19px;margin:0;letter-spacing:1px;line-height:1.15;font-weight:700;color:var(--ink)}
 .brand small{display:block;color:var(--mut);font-size:12px;letter-spacing:2px}
 .brand .sp{flex:1}
@@ -237,7 +239,7 @@ footer.ver{color:var(--mut);font-size:12px;text-align:center;margin-top:24px}
 <body>
 <header class="top">
  <div class="brand">
-  <span class="mark" aria-hidden="true"><svg viewBox="0 0 100 100"><g fill="none" stroke="#fff" stroke-width="5.5"><circle cx="50" cy="29" r="15"/><circle cx="70" cy="43.5" r="15"/><circle cx="62.3" cy="67" r="15"/><circle cx="37.7" cy="67" r="15"/><circle cx="30" cy="43.5" r="15"/></g><circle cx="50" cy="50" r="7.5" fill="#FF6B4A"/></svg></span>
+  <!--LOGO_MARK--><span class="mark" aria-hidden="true"><svg viewBox="0 0 100 100"><g fill="none" stroke="#fff" stroke-width="5.5"><circle cx="50" cy="29" r="15"/><circle cx="70" cy="43.5" r="15"/><circle cx="62.3" cy="67" r="15"/><circle cx="37.7" cy="67" r="15"/><circle cx="30" cy="43.5" r="15"/></g><circle cx="50" cy="50" r="7.5" fill="#FF6B4A"/></svg></span><!--/LOGO_MARK-->
   <div><h1>經管團隊</h1><small id="unitLabel">中壢業務中心</small></div>
   <div class="sp"></div>
   <button id="installBtn" class="sm" hidden>安裝 App</button>
@@ -1536,6 +1538,10 @@ const SI_THEMES = {
   iris: { label: '桐花紫（墨紫＋橘）', ink: '#221F2E', mut: '#615C70', paper: '#F8F7FB', card: '#FFFFFF', line: '#E7E4EF', pri: '#5B4BDB', priSoft: '#ECE9FC', priSofter: '#F6F4FE', acc: '#FF8A3D', accText: '#B4530F', accSoft: '#FFEEDF', amber: '#E0A100', amberText: '#7A5800', violet: '#0E9F8E', gray: '#A19CAE', foot: '#221F2E', footMut: '#B6B0C6', stream2: '#9C8FF0' }
 };
 let ZL = SI_THEMES.modern;
+// 品牌標誌（建置時可換成 logo 概念 A／B／C；空字串＝預設幾何桐花）
+const ZL_LOGO_URI = '__ZL_LOGO_URI__'.startsWith('data:') ? '__ZL_LOGO_URI__' : '';
+let siLogoImg = null;
+const siLoadLogo = () => !ZL_LOGO_URI ? Promise.resolve(null) : siLogoImg ? Promise.resolve(siLogoImg) : new Promise(res => { const im = new Image(); im.onload = () => res(siLogoImg = im); im.onerror = () => res(null); im.src = ZL_LOGO_URI; });
 const ZL_SANS = '"Noto Sans TC","PingFang TC","Microsoft JhengHei","微軟正黑體","Noto Sans CJK TC","Noto Sans TC","Heiti TC","Source Han Sans TC",sans-serif';
 const ZL_SERIF = 'ZLSans,"PingFang TC","Noto Sans CJK TC","Noto Sans TC","Microsoft JhengHei",sans-serif'; // 標題用內嵌 Noto Sans TC Bold 子集
 const SI_KIND_L = { insurer: ['pri', '商品課程'], fixed: ['amber', '固定會議'], custom: ['violet', '專題／活動'], open: ['gray', '待安排'] };
@@ -1664,10 +1670,12 @@ async function renderScheduleImage(ym, cfg, opt = {}) {
   // 底色
   ctx.fillStyle = ZL.paper; ctx.fillRect(0, 0, W, H);
   /* ---------- 頁首：留白＋大月份＋老街溪細流＋幾何桐花 ---------- */
-  ctx.save(); ctx.globalAlpha = .55; siBlossom(ctx, W - 250, 120, 210, .18, .16, ZL.pri, 3); ctx.restore();
+  const logo = await siLoadLogo();
+  if (logo) { ctx.save(); ctx.fillStyle = ZL.pri; for (let gx = W - 520; gx < W; gx += 28) for (let gy = 16; gy < SI_HEAD - 90; gy += 28) { const a = Math.max(0, 1 - Math.hypot(gx - (W - 120), gy - 60) / 460); if (a > 0) { ctx.globalAlpha = .22 * a; ctx.beginPath(); ctx.arc(gx, gy, 2.2, 0, Math.PI * 2); ctx.fill(); } } ctx.restore(); }
+  else { ctx.save(); ctx.globalAlpha = .55; siBlossom(ctx, W - 250, 120, 210, .18, .16, ZL.pri, 3); ctx.restore(); }
   siStream(ctx, 0, W, SI_HEAD - 70, 3, 13, 16, 760, .4, [ZL.pri, ZL.stream2, ZL.acc], 3);
   // 品牌字標
-  siBlossom(ctx, X0 + 15, 66, 30, 0, 1, ZL.ink, 2.8);
+  if (logo) ctx.drawImage(logo, X0 - 4, 40, 50, 50); else siBlossom(ctx, X0 + 15, 66, 30, 0, 1, ZL.ink, 2.8);
   ctx.font = siFont(700, 22, ZL_SERIF); ctx.fillStyle = ZL.ink; ctx.letterSpacing = '4px'; ctx.fillText('中壢業務中心', X0 + 52, 74); const bw = ctx.measureText('中壢業務中心').width; ctx.letterSpacing = '0px';
   ctx.font = siFont(600, 15); ctx.fillStyle = ZL.mut; ctx.letterSpacing = '3px'; ctx.fillText('ZHONGLI ・ 公勝保經', X0 + 52 + bw + 12, 73); ctx.letterSpacing = '0px';
   ctx.font = siFont(700, 230, ZL_SERIF); const mStr = String(data.m); const mw = ctx.measureText(mStr).width;
@@ -1768,7 +1776,7 @@ async function renderScheduleImage(ym, cfg, opt = {}) {
   const fy = H - hh.foot + 30;
   ctx.save(); siRR(ctx, 0, fy, W, H - fy + 40, 0); ctx.fillStyle = ZL.foot; ctx.fillRect(0, fy, W, H - fy); ctx.beginPath(); ctx.rect(0, fy, W, H - fy); ctx.clip();
   siStream(ctx, 0, W, fy + 26, 3, 11, 10, 640, 2.2, [ZL.stream2, ZL.pri, ZL.acc], 2.2);
-  ctx.globalAlpha = 1; siBlossom(ctx, 86, fy + 108, 34, .3, .9, 'rgba(255,255,255,.75)', 2.4); siBlossom(ctx, W - 86, fy + 108, 34, 1.1, .9, 'rgba(255,255,255,.75)', 2.4);
+  ctx.globalAlpha = 1; if (logo) { ctx.drawImage(logo, 52, fy + 74, 72, 72); ctx.drawImage(logo, W - 124, fy + 74, 72, 72); } else { siBlossom(ctx, 86, fy + 108, 34, .3, .9, 'rgba(255,255,255,.75)', 2.4); siBlossom(ctx, W - 86, fy + 108, 34, 1.1, .9, 'rgba(255,255,255,.75)', 2.4); }
   ctx.restore();
   ctx.textAlign = 'center';
   const slogan = String(cfg.slogan || '').trim();

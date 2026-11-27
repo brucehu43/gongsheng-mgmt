@@ -1,5 +1,5 @@
 /* 經管團隊 service worker：預先快取本站檔案，供離線使用。 */
-const VERSION = '1.2.0-9d09fda7';
+const VERSION = '1.2.0-0378f647';
 const CACHE = 'gongsheng-mgmt-' + VERSION;
 const PRECACHE = ['./', './index.html', './manifest.webmanifest', './icons/icon-192.png', './icons/icon-512.png', './icons/icon-maskable-512.png', './icons/apple-touch-icon.png', './icons/favicon-64.png'];
 self.addEventListener('install', e => { e.waitUntil(caches.open(CACHE).then(c => c.addAll(PRECACHE.map(u => new Request(u, { cache: 'reload' })))).then(() => self.skipWaiting())); });

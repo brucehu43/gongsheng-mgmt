@@ -1,0 +1,38 @@
+{
+  "name": "經管團隊｜中壢業務中心",
+  "short_name": "經管團隊",
+  "id": "./",
+  "start_url": "./",
+  "scope": "./",
+  "description": "中壢業務中心經管團隊工作 App：教育訓練抽籤與排課、活動企劃與請款、三強三傑簡報與獎狀、粉專規劃、公積金與營運基金。",
+  "lang": "zh-Hant-TW",
+  "dir": "ltr",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#f6f3ee",
+  "theme_color": "#7a1020",
+  "categories": [
+    "business",
+    "productivity"
+  ],
+  "icons": [
+    {
+      "src": "icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}
